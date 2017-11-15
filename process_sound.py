@@ -7,7 +7,7 @@
 # as well to convert format between PyAudio into
 # the Aubio.
 import aubio
-import numpy as num
+import numpy as np
 import pyaudio
 import sys
 
@@ -27,44 +27,28 @@ PERIOD_SIZE_IN_FRAME    = HOP_SIZE
 
 def main(args):
 
-    # Initiating PyAudio object.
     pA = pyaudio.PyAudio()
-    # Open the microphone stream.
     mic = pA.open(format=FORMAT, channels=CHANNELS,
         rate=SAMPLE_RATE, input=True,
         frames_per_buffer=PERIOD_SIZE_IN_FRAME)
 
-    # Initiating Aubio's pitch detection object.
     pDetection = aubio.pitch(METHOD, BUFFER_SIZE,
         HOP_SIZE, SAMPLE_RATE)
-    # Set unit.
     pDetection.set_unit("Hz")
-    # Frequency under -40 dB will considered
-    # as a silence.
     pDetection.set_silence(-40)
 
-    # Infinite loop!
     readings = []
 
     while True:
-        # Always listening to the microphone.
         data = mic.read(PERIOD_SIZE_IN_FRAME)
-        # Convert into number that Aubio understand.
-        samples = num.fromstring(data,
+        samples = np.fromstring(data,
             dtype=aubio.float_type)
-        # Finally get the pitch.
         pitch = pDetection(samples)[0]
-        # Compute the energy (volume)
-        # of the current frame.
-        volume = num.sum(samples**2)/len(samples)
-        # Format the volume output so it only
-        # displays at most six numbers behind 0.
+        volume = np.sum(samples**2)/len(samples)
         volume = "{:2f}".format(volume*1E4)
 
         readings.append( SoundReading(pitch, volume) )
 
-        # Finally print the pitch and the volume.
-        # print(str(pitch) + " " + str(volume))
         print( "Vol: {:10}    ||||||     Pitch: {:<10}".format(volume, pitch) )
 
 if __name__ == "__main__": main(sys.argv)
