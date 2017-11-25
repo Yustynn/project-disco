@@ -11,9 +11,13 @@ import numpy as np
 import pyaudio
 import sys
 
+from SoundProcessor import SoundProcessor
+
 from collections import namedtuple
 
 SoundReading = namedtuple('SoundReading', ['pitch', 'volume'])
+
+sp = SoundProcessor()
 
 # Some constants for setting the PyAudio and the
 # Aubio.
@@ -44,11 +48,13 @@ def main(args):
         samples = np.fromstring(data,
             dtype=aubio.float_type)
         pitch = pDetection(samples)[0]
-        volume = np.sum(samples**2)/len(samples)
-        volume = "{:2f}".format(volume*1E4)
+        volume = np.sqrt( np.sum(samples**2)/len(samples) ) * 1E4
+        
+        volume_str = "{:2f}".format(volume)
 
         readings.append( SoundReading(pitch, volume) )
+        sp.process_raw_input(pitch, volume)
 
-        print( "Vol: {:10}    ||||||     Pitch: {:<10}".format(volume, pitch) )
+        print( "Vol: {:10}    ||||||     Pitch: {:<10}".format(volume_str, pitch) )
 
 if __name__ == "__main__": main(sys.argv)
