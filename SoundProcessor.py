@@ -1,8 +1,8 @@
 from math import exp
 import numpy as np
 
-CHUNK_SIZE = 100
-STEP_SIZE = 10
+CHUNK_SIZE = 20
+STEP_SIZE = 5
 
 SIZE_THRESHOLD = 5000
 
@@ -60,7 +60,7 @@ class SoundProcessor:
 
         self.pitches.append(processed_pitch)
         self.pitches.append(processed_volume)
-        print(processed_pitch, processed_volume)
+        print("Pitch {:.2f}, Volume {:.2f}".format(processed_pitch, processed_volume))
 
     def get_control_values(self):
         pitch_rms  = self.moving_rms( self.pitches )

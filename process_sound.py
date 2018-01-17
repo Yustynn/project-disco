@@ -55,6 +55,6 @@ def main(args):
         readings.append( SoundReading(pitch, volume) )
         sp.process_raw_input(pitch, volume)
 
-        print( "Vol: {:10}    ||||||     Pitch: {:<10}".format(volume_str, pitch) )
+        # print( "Vol: {:10}    ||||||     Pitch: {:<10}".format(volume_str, pitch) )
 
 if __name__ == "__main__": main(sys.argv)
