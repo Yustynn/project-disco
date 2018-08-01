@@ -1,4 +1,5 @@
 # socket_echo_server.py
+
 import socket
 import sys
 from time import sleep
@@ -6,12 +7,11 @@ from light_controller import set_light
 
 READING_MAX_LENGTH = 10
 PORT = 8000
+IP_ADDRESS = '10.12.14.249'
 
-# Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Bind the socket to the port
-server_address = ('10.12.14.249', PORT)
+server_address = (IP Address, PORT)
 print('starting up on {} port {}'.format(*server_address))
 sock.bind(server_address)
 
@@ -35,7 +35,7 @@ while True:
                     new_data = data[stop_point:]
                     res += data[:stop_point]
                     data = new_data
-            
+
                 if len(res) == READING_MAX_LENGTH * 2:
                     pitch, volume = [float(v) for v in (res[:READING_MAX_LENGTH],
                                                    res[READING_MAX_LENGTH:])]
