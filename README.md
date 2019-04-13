@@ -2,7 +2,7 @@
 
 # What is this
 
-Imagine a room that responds to the activities inside it. Imagine a room that passively enhances whatever you're doing.
+Imagine a room that responds to the activities inside it. Imagine a room that passively enhances whatever you're doing. Almost as if the room itself *cares*.
 
 This is what we're going for with project disco. Disco listens to what's going on inside your room, and changes the room's lighting to respond to it. This is great for listening to music, having conversations, gaming, basically anything with sound emitted. The room comes to life.
 
